@@ -22,14 +22,14 @@ const main = async () => {
 	});
 
 	// Test...
-	// const repository = connection.getRepository(Book);
-	// const book = new Book();
-	// book.title = "title";
-	// book.author = "author";
-	// await repository.save(book);
+	const repository = connection.getRepository(Book);
+	const book = new Book();
+	book.title = "title";
+	book.author = "author";
+	await repository.save(book);
 
-	// const allBooks = await Book.find();
-	// console.log("all books::", allBooks);
+	const allBooks = await Book.find();
+	console.log("all books::", allBooks);
 
 	// TODO: Redis.
 
