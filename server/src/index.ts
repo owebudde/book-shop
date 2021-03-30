@@ -3,8 +3,12 @@ import express from "express";
 import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
 import cors from "cors";
+import mongoose from "mongoose";
 
-import { HelloResolver } from "./resolvers";
+import { BooksResolver, HelloResolver } from "./resolvers";
+import { mongo_db } from "./app.config";
+
+const __port__ = process.env.PORT || 3939;
 
 const main = async () => {
 	const app = express();
@@ -15,7 +19,7 @@ const main = async () => {
 	// Create the server.
 	const apolloServer = new ApolloServer({
 		schema: await buildSchema({
-			resolvers: [HelloResolver],
+			resolvers: [HelloResolver, BooksResolver],
 			validate: false,
 		}),
 	});
@@ -23,8 +27,17 @@ const main = async () => {
 	// Apply the middleware.
 	apolloServer.applyMiddleware({ app, path: `/api/v1` });
 
-	// Start the port.
-	app.listen(3600, () => console.log("Server started on localhost:3600"));
+	// Connect Mongodb.
+	await mongoose
+		.connect(mongo_db, {
+			useNewUrlParser: true,
+			useUnifiedTopology: true,
+		})
+		.then(() => {
+			console.log("MongoDB connected");
+			return app.listen({ port: __port__ });
+		})
+		.catch((err) => console.error(err));
 };
 
 main().catch((err) => console.error(err));
