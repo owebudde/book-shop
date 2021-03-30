@@ -1,20 +1,55 @@
-import { Resolver, Query, Int, Arg, Ctx, Mutation } from "type-graphql";
-// import { Book } from "../entities/Book";
+import {
+	Arg,
+	Ctx,
+	Field,
+	FieldResolver,
+	InputType,
+	Int,
+	Mutation,
+	ObjectType,
+	Query,
+	Resolver,
+	Root,
+	UseMiddleware,
+} from "type-graphql";
+import { getConnection } from "typeorm";
 
-// @Resolver()
-// export class BooksResolver {
-// 	@Query(() => [Book])
-// 	async books(): Promise<Book[]> {
-// 		const posts = await Book.find().sort({ createdAt: -1 });
-// 		return posts;
-// 	}
+import { Book } from "../entities/Book";
+// import { MyContext } from "../types";
 
-// 	// Get book, by id.
-// 	// @Query(() => Book, { nullable: true })
-// 	// book(
-// 	// 	@Arg("id", () => Int) id: number
-// 	// 	// @Ctx() { em }: MyContext
-// 	// ): Promise<Book | null> {
-// 	// 	return em.findOne(Book, { id });
-// 	// }
+// @InputType()
+// class PostInput {
+// 	@Field()
+// 	title: string;
+
+// 	@Field()
+// 	author: string;
 // }
+
+// @ObjectType()
+// class PaginatedPosts {
+//   @Field(() => [Post])
+//   posts: Post[];
+//   @Field()
+//   hasMore: boolean;
+// }
+
+export class BookResolver {
+	async getBooks() {
+		return "fetching all books...";
+	}
+	// async getBooks(@Arg("limit", () => Int) limit: number) {
+	// 	const books = getConnection().query(`
+	// 		select * from books;
+	// 	`);
+
+	// 	return {
+	// 		books,
+	// 		// render more?
+	// 	};
+	// }
+
+	// async createBook(@Arg("input") input: PostInput, @Ctx() { req }: MyContext) {
+	// 	return Book.create({});
+	// }
+}

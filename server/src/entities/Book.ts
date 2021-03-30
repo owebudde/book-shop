@@ -17,7 +17,19 @@ export class Book extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	id!: number;
 
+	@Field(() => String)
+	@CreateDateColumn()
+	createdAt!: Date;
+
+	@Field(() => String)
+	@UpdateDateColumn()
+	updatedAt!: Date;
+
 	@Field()
 	@Column()
 	title!: string;
+
+	@Field()
+	@Column()
+	author!: string;
 }
