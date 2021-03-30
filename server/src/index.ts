@@ -2,42 +2,34 @@ import "reflect-metadata";
 import express from "express";
 import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
-import cors from "cors";
-import mongoose from "mongoose";
 
-import { BooksResolver, HelloResolver } from "./resolvers";
-import { mongo_db } from "./app.config";
+import { HelloResolver } from "./resolvers";
 
-const __port__ = process.env.PORT || 3939;
+const __port__ = process.env.PORT || 7777;
 
 const main = async () => {
 	const app = express();
 
-	// TODO: look into fix for local dev.
-	app.use("*", cors());
+	// TODO: Redis.
 
 	// Create the server.
 	const apolloServer = new ApolloServer({
 		schema: await buildSchema({
-			resolvers: [HelloResolver, BooksResolver],
+			resolvers: [HelloResolver],
 			validate: false,
 		}),
 	});
 
-	// Apply the middleware.
-	apolloServer.applyMiddleware({ app, path: `/api/v1` });
+	// Set api path, and turn off cors for local dev.
+	apolloServer.applyMiddleware({
+		app,
+		path: `/api/v1`,
+		cors: false,
+	});
 
-	// Connect Mongodb.
-	await mongoose
-		.connect(mongo_db, {
-			useNewUrlParser: true,
-			useUnifiedTopology: true,
-		})
-		.then(() => {
-			console.log("MongoDB connected");
-			return app.listen({ port: __port__ });
-		})
-		.catch((err) => console.error(err));
+	app.listen(__port__, () => {
+		console.log(`Server started on localhost: ${__port__}`);
+	});
 };
 
 main().catch((err) => console.error(err));

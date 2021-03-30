@@ -1,26 +1,23 @@
-import { model, Schema } from "mongoose";
+import { ObjectType, Field, Int } from "type-graphql";
+import {
+	Entity,
+	Column,
+	PrimaryGeneratedColumn,
+	CreateDateColumn,
+	UpdateDateColumn,
+	BaseEntity,
+	ManyToOne,
+	OneToMany,
+} from "typeorm";
 
-const bookSchema = new Schema({
-	body: String,
-	username: String,
-	createdAt: String,
-	comments: [
-		{
-			body: String,
-			username: String,
-			createdAt: String,
-		},
-	],
-	likes: [
-		{
-			username: String,
-			createdAt: String,
-		},
-	],
-	user: {
-		type: Schema.Types.ObjectId,
-		ref: "users",
-	},
-});
+@ObjectType()
+@Entity()
+export class Book extends BaseEntity {
+	@Field()
+	@PrimaryGeneratedColumn()
+	id!: number;
 
-module.exports = model("Book", bookSchema);
+	@Field()
+	@Column()
+	title!: string;
+}
