@@ -2,19 +2,21 @@ import "reflect-metadata";
 import express from "express";
 import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
-import { createConnection, Connection } from "typeorm";
+import { createConnection } from "typeorm";
 
 import { BookResolver, HelloResolver } from "./resolvers";
-import { Book } from "./entities/Book";
+// import { Book } from "./entities/Book";
 import { typeOrmConfig } from "./ormconfig";
 
 const __port__ = process.env.PORT || 7777;
 
 const main = async () => {
 	const app = express();
-	const connection: Connection = await createConnection(typeOrmConfig);
+	// const connection: Connection =
+	await createConnection(typeOrmConfig);
+	// console.log("connection", connection);
 
-	// Test...
+	// Insert Test Data...
 	// const repository = connection.getRepository(Book);
 	// const book = new Book();
 	// book.title = "title2";
@@ -29,7 +31,7 @@ const main = async () => {
 	// Create the server.
 	const apolloServer = new ApolloServer({
 		schema: await buildSchema({
-			resolvers: [HelloResolver],
+			resolvers: [HelloResolver, BookResolver],
 			validate: false,
 		}),
 	});

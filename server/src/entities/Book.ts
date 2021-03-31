@@ -1,4 +1,4 @@
-import { ObjectType, Field, Int } from "type-graphql";
+import { ObjectType, Field } from "type-graphql";
 import {
 	Entity,
 	Column,
@@ -6,8 +6,8 @@ import {
 	CreateDateColumn,
 	UpdateDateColumn,
 	BaseEntity,
-	ManyToOne,
-	OneToMany,
+	// ManyToOne,
+	// OneToMany,
 } from "typeorm";
 
 @ObjectType()
@@ -19,11 +19,11 @@ export class Book extends BaseEntity {
 
 	@Field(() => String)
 	@CreateDateColumn()
-	createdAt!: Date;
+	createdAt: Date;
 
 	@Field(() => String)
 	@UpdateDateColumn()
-	updatedAt!: Date;
+	updatedAt: Date;
 
 	@Field()
 	@Column()
