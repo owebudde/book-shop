@@ -12,15 +12,13 @@ const __port__ = process.env.PORT || 7777;
 
 const main = async () => {
 	const app = express();
-	console.log("here");
 	const connection: Connection = await createConnection(typeOrmConfig);
-	console.log("connected to pg::", connection);
 
 	// Test...
 	// const repository = connection.getRepository(Book);
 	// const book = new Book();
-	// book.title = "title";
-	// book.author = "author";
+	// book.title = "title2";
+	// book.author = "author2";
 	// await repository.save(book);
 
 	// const allBooks = await Book.find();
@@ -48,8 +46,8 @@ const main = async () => {
 	});
 
 	// Close the postgresql connection.
-	await connection.close();
-	console.log("PG connection closed.");
+	// await connection.close();
+	// console.log("PG connection closed.");
 };
 
 main().catch((err) => console.error(err));
