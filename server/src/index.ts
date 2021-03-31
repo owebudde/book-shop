@@ -6,30 +6,25 @@ import { createConnection, Connection } from "typeorm";
 
 import { BookResolver, HelloResolver } from "./resolvers";
 import { Book } from "./entities/Book";
+import { typeOrmConfig } from "./ormconfig";
 
 const __port__ = process.env.PORT || 7777;
 
 const main = async () => {
 	const app = express();
-	const connection: Connection = await createConnection({
-		type: "postgres",
-		url: process.env.DATABASE_URL,
-		logging: true,
-		username: "postgres",
-		password: "Lewesbeach!3",
-		database: "unique_books",
-		entities: [Book],
-	});
+	console.log("here");
+	const connection: Connection = await createConnection(typeOrmConfig);
+	console.log("connected to pg::", connection);
 
 	// Test...
-	const repository = connection.getRepository(Book);
-	const book = new Book();
-	book.title = "title";
-	book.author = "author";
-	await repository.save(book);
+	// const repository = connection.getRepository(Book);
+	// const book = new Book();
+	// book.title = "title";
+	// book.author = "author";
+	// await repository.save(book);
 
-	const allBooks = await Book.find();
-	console.log("all books::", allBooks);
+	// const allBooks = await Book.find();
+	// console.log("all books::", allBooks);
 
 	// TODO: Redis.
 
@@ -51,6 +46,10 @@ const main = async () => {
 	app.listen(__port__, () => {
 		console.log(`Server started on localhost: ${__port__}`);
 	});
+
+	// Close the postgresql connection.
+	await connection.close();
+	console.log("PG connection closed.");
 };
 
 main().catch((err) => console.error(err));

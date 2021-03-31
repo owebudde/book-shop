@@ -2,17 +2,19 @@
 	"name": "unique-books",
 	"version": "1.0.0",
 	"description": "",
+	"keywords": [],
+	"author": "Eliot Budde",
+	"license": "ISC",
 	"main": "index.js",
 	"scripts": {
 		"watch": "tsc -w",
 		"dev": "nodemon dist/index.js",
 		"dev2": "nodemon --exec ts-node src/index.ts",
 		"start": "node dist/index.js",
-		"start2": "ts-node src/index.ts"
+		"start2": "ts-node src/index.ts",
+		"typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js",
+		"typeorm:cli": "ts-node ./node_modules/typeorm/cli -f ./src/ormconfig.ts"
 	},
-	"keywords": [],
-	"author": "",
-	"license": "ISC",
 	"dependencies": {
 		"apollo-server-express": "^2.22.1",
 		"cors": "^2.8.5",
@@ -27,6 +29,7 @@
 	"devDependencies": {
 		"@types/express": "^4.17.11",
 		"@types/node": "^14.14.37",
-		"nodemon": "^2.0.7"
+		"nodemon": "^2.0.7",
+		"ts-node": "^9.1.1"
 	}
 }
