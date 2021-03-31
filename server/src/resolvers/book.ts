@@ -1,17 +1,4 @@
-import {
-	// Arg,
-	// Ctx,
-	Field,
-	// FieldResolver,
-	// InputType,
-	// Int,
-	// Mutation,
-	ObjectType,
-	Query,
-	Resolver,
-	// Root,
-	// UseMiddleware,
-} from "type-graphql";
+import { Field, ObjectType, Query, Resolver } from "type-graphql";
 import { getConnection } from "typeorm";
 
 import { Book } from "../entities/Book";
@@ -28,8 +15,7 @@ class IBooks {
  */
 @Resolver(Book)
 export class BookResolver {
-	// Get all books.
-	// TODO: pass args to slim down the results.
+	// TODO: pass args for filtered results.
 	@Query(() => IBooks)
 	async getBooks() {
 		const books = await getConnection().query(`
